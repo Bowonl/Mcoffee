@@ -97,7 +97,7 @@ public class RegisterFragment extends Fragment{
 
     }//End Save Controller
 
-    private void regisMenber(String strName, String strSName, String strUser, String strPassword){
+    private void regisMenber(final String strName, String strSName, String strUser, String strPassword){
         String strURL = "http://infobizplus.com/R2P/php/appMemberRegis.php";
         OkHttpClient OkHttpClient = new OkHttpClient();
         RequestBody RequestBody = new FormEncodingBuilder()
@@ -119,7 +119,22 @@ public class RegisterFragment extends Fragment{
             @Override
             public void onResponse(Response response) throws IOException {
                 try {
-                    getActivity().finish();
+                    String resualtString = response.body().string();
+                    Log.d("M COFFEE", "Response ==>"+ resualtString);
+
+                    getActivity().getSupportFragmentManager().popBackStack();
+
+                    /*
+
+                    if(Boolean.parseBoolean(resualtString)){
+
+                    }else{
+                        MyAleart myAleart  = new MyAleart(getActivity());
+                        myAleart.myDialog("Can not Upload",
+                                "Plases Try again Network False");
+                    }
+                    */
+                    //getActivity().finish();
                 } catch (Exception e){
                     Log.d("M COFFEE","error " + e.toString());
                 }
