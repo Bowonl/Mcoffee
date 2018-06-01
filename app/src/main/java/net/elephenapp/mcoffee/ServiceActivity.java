@@ -2,6 +2,8 @@ package net.elephenapp.mcoffee;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -33,8 +35,25 @@ public class ServiceActivity extends AppCompatActivity {
 
     }//Main Method
 
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        actionBarDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        actionBarDrawerToggle.syncState();
+     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
+        if(actionBarDrawerToggle.onOptionsItemSelected(item)){
+            return true;
+        }
 
         if(item.getItemId() == R.id.itemSignOut){
             saveSharePreferance();
@@ -74,7 +93,10 @@ public class ServiceActivity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
+        drawerLayout = findViewById(R.id.drawerService);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(ServiceActivity.this,
+                drawerLayout,R.string.open, R.string.close);
+        drawerLayout.setDrawerListener(actionBarDrawerToggle);
 
 
     }
