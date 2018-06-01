@@ -35,16 +35,19 @@
     <!--Drawer Layout-->
     <LinearLayout
         android:layout_gravity="start"
-        android:background="#c8ce5252"
+        android:background="#ffffff"
         android:orientation="vertical"
         android:layout_width="320dp"
         android:layout_height="match_parent">
 
-        <TextView
-            android:textSize="@dimen/h1"
-            android:text="Drawer Menu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+       <!--content of Fragment-->
+        <FrameLayout
+            android:id="@+id/contentMenuDrawer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+        </FrameLayout>
 
     </LinearLayout>
 

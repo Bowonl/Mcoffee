@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--content-->
+
+    <LinearLayout
+        android:layout_margin="@dimen/my_margin"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!--Avata-->
+        <ImageView
+            android:id="@+id/imvAvata"
+            android:scaleType="centerInside"
+            android:src="@drawable/avata"
+            android:layout_width="match_parent"
+            android:layout_height="200dp" />
+        <!--Name-->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!--Icon-->
+            <ImageView
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_action_private"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <!--TextFeild-->
+            <EditText
+                android:id="@+id/edtName"
+                android:inputType="text"
+                android:text="Name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+
+        </LinearLayout>
+
+        <!--Sername-->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!--Icon-->
+            <ImageView
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_action_private"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <!--TextFeild-->
+            <EditText
+                android:id="@+id/edtSName"
+                android:inputType="text"
+                android:text="Sername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+
+        </LinearLayout>
+        <!--Email-->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!--Icon-->
+            <ImageView
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_action_private"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <!--TextFeild-->
+            <EditText
+                android:id="@+id/edtEmail"
+                android:inputType="text"
+                android:text="Email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+
+        </LinearLayout>
+        <!--Balance-->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!--Icon-->
+            <ImageView
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_action_private"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <!--TextFeild-->
+            <TextView
+                android:id="@+id/txtBalance"
+                android:layout_gravity="center_vertical"
+                android:textSize="@dimen/h2"
+                android:text="1000 THB"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/bynEditValue"
+        android:text="Edit_Value"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+</RelativeLayout>
