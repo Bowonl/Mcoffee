@@ -1,6 +1,13 @@
 package net.elephenapp.mcoffee;
 
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,9 +19,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import org.jibble.simpleftp.SimpleFTP;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FilterInputStream;
 
 public class DetailUserFragment extends Fragment {
 
@@ -23,6 +36,8 @@ public class DetailUserFragment extends Fragment {
     private EditText nameEdiText, surnameEditText, emailEditText;
     private TextView balanceTextView;
     private Button editButton;
+    private Uri uri;
+    private boolean photoABoolean = false;
 
 
     public static DetailUserFragment detailUserInstance(String midString) {
@@ -50,8 +65,100 @@ public class DetailUserFragment extends Fragment {
 //        Show View
         showView();
 
+//        change avata
+        changeAvata();
+
+//        Edit Controler
+
+        editControler();
+
 
     }//Main Method
+
+    private void editControler() {
+        editButton.setOnClickListener(new View.OnClickListener() {
+                 @Override
+                 public void onClick(View v) {
+
+//                     Photo Manage
+                     if(photoABoolean){
+                         uploadPhotoToServer();
+                     }
+
+                  }
+        });
+    }
+
+    private void uploadPhotoToServer() {
+//        Find Path Photo
+        String pathPhotoString = null;
+        String[] strings = new String[]{MediaStore.Images.Media.DATA};
+        Cursor cursor = getActivity().getContentResolver()
+                .query(uri, strings, null, null, null);
+        if(cursor != null){
+            cursor.moveToFirst();
+            int indexInt = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            pathPhotoString = cursor.getString(indexInt);
+
+        }else{
+            pathPhotoString = uri.getPath();
+        }
+        Log.d("1JuneV1","PhatPhoto ==> " + pathPhotoString);
+
+        try{
+
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy
+                    .Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            SimpleFTP simpleFTP = new SimpleFTP();
+            simpleFTP.connect("ftp.swiftcodingthai.com",21,"dru@swiftcodingthai.com" ,"Abc12345");
+            simpleFTP.bin();
+            simpleFTP.cwd("member");
+            simpleFTP.stor(new FileInputStream(new File(pathPhotoString)),midString + ".jpg");
+            simpleFTP.disconnect();
+
+        }catch (Exception e){
+            Log.d("1JuneV1","e ftp ==> " + e.toString());
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == getActivity().RESULT_OK){
+            photoABoolean = true;
+            uri = data.getData();
+            try{
+
+                Bitmap bitmap = BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(uri));
+                avataImageView.setImageBitmap(bitmap);
+
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+
+        }else {
+            Toast.makeText(getActivity(),"Plase Choose Image One mere...",
+                    Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    private void changeAvata() {
+        avataImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/*");
+                startActivityForResult(Intent.createChooser(intent,"Please Choose App"),1);
+
+            }
+        });
+    }
 
     private void showView() {
         try {
