@@ -13,13 +13,17 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 public class DetailUserFragment extends Fragment {
 
-    private String midString;
+    private String midString, nameString,sernameString,emailString,balanceString;
     private ImageView avataImageView;
     private EditText nameEdiText, surnameEditText, emailEditText;
     private TextView balanceTextView;
     private Button editButton;
+
 
     public static DetailUserFragment detailUserInstance(String midString) {
 
@@ -38,6 +42,7 @@ public class DetailUserFragment extends Fragment {
         midString = getArguments().getString("mid");
         Log.d("1JuneV1", "midString Recive ==> " + midString);
 
+
 //        Initial View
         initialView();
 
@@ -55,6 +60,19 @@ public class DetailUserFragment extends Fragment {
             getUserWhareMid.execute(midString, myConstant.getUrlGetUserWhereMid());
             String jsonString = getUserWhareMid.get();
             Log.d("1JuneV1",  "JSON ==> " + jsonString );
+            JSONArray jsonArray = new JSONArray(jsonString);
+            JSONObject jsonObject = jsonArray.getJSONObject(0);
+
+            nameString = jsonObject.getString("name");
+            sernameString = jsonObject.getString("sername");
+            emailString = jsonObject.getString("email");
+            balanceString = jsonObject.getString("balance");
+
+            nameEdiText.setText(nameString);
+            surnameEditText.setText(sernameString);
+            emailEditText.setText(emailString);
+            balanceTextView.setText(balanceString);
+
 
         }catch (Exception e){
             e.printStackTrace();
